@@ -58,7 +58,8 @@ instance.interceptors.response.use(res => {
     // 如果没登录
     if (!user || !user.token || !user.refresh_token) {
       // 拦截到登录
-      return router.push(loginConfig)
+      router.push(loginConfig)
+      return Promise.reject(err)
     }
     try {
       // token失效
@@ -87,7 +88,8 @@ instance.interceptors.response.use(res => {
       // 1. 删除token
       store.commit('delUser')
       // 2. 拦截登录
-      return router.push(loginConfig)
+      router.push(loginConfig)
+      return Promise.reject(err)
     }
   }
   return Promise.reject(err)
